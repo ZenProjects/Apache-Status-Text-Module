@@ -2,3 +2,8 @@ Makefile
 config.log
 config.status
 mod_status_text_config.h
+.libs/
+*.la
+*.lo
+*.o
+*.slo
