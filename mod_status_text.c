@@ -19,7 +19,8 @@
  *
  * Original source by Mark Cox, mark@ukweb.com, November 1995
  * V1.0 by Mathieu CARBONNEAUX, 06/08/2010, Full Text fork for only machine automatique parsing
- * V1.1 by Mathieu CARBONNEAUX, 22/10/2010, Full Text fork for only machine automatique parsing + runtime log statistique
+ * V1.1 by Mathieu CARBONNEAUX, 22/10/2010, add realtime log statistique
+ * V1.2 by Mathieu CARBONNEAUX, 27/10/2013, add httpd 2.4 support
  */
 
 #define CORE_PRIVATE
@@ -1407,10 +1408,11 @@ int status_text_create_scoreboard(apr_pool_t *p, ap_scoreboard_e sb_type)
 
 static void register_hooks(apr_pool_t *p)
 {
-    static const char * const aszPre[]={ "mod_status.c",NULL };
+    //static const char * const aszPre[]={ "mod_status.c",NULL };
     ap_hook_log_transaction(runtime_statistique,NULL,NULL,APR_HOOK_MIDDLE);
     ap_hook_handler(status_text_handler, NULL, NULL, APR_HOOK_MIDDLE);
-    ap_hook_post_config(status_text_init, aszPre, NULL, APR_HOOK_MIDDLE);
+    //ap_hook_post_config(status_text_init, aszPre, NULL, APR_HOOK_MIDDLE);
+    ap_hook_post_config(status_text_init, NULL, NULL, APR_HOOK_MIDDLE);
     ap_hook_child_init(status_text_child_init, NULL, NULL, APR_HOOK_MIDDLE);
     ap_hook_pre_mpm(status_text_create_scoreboard, NULL, NULL, APR_HOOK_MIDDLE);
 }

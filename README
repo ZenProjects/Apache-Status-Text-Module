@@ -9,12 +9,7 @@ What is it?
 
 How to use it ?
 
-   Load "mod_status" module and activate the "ExtendedStatus"
-
-   LoadModule status_module modules/mod_status.so
-   ExtendedStatus On
-
-   them load mod_status_text and to enable it, add the following lines into any config file:
+   Load mod_status_text and to enable it, add the following lines into any config file:
 
    LoadModule status_text_module modules/mod_status_text.so
    <Location /server-status-text>
