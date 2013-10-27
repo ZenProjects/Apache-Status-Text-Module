@@ -1,0 +1,30 @@
+                                   mod_status_text
+
+What is it?
+
+   This is a full text fork of mod_status for only machine automatique parsing.
+
+   This is Status Module.  They display lots of internal data about how Apache is
+   performing and the state of all children processes.
+
+How to use it ?
+
+   Load "mod_status" module and activate the "ExtendedStatus"
+
+   LoadModule status_module modules/mod_status.so
+   ExtendedStatus On
+
+   them load mod_status_text and to enable it, add the following lines into any config file:
+
+   LoadModule status_text_module modules/mod_status_text.so
+   <Location /server-status-text>
+   SetHandler server-status-text
+   </Location>
+
+   You may want to protect this location by password or domain so no one
+   else can look at it.  Then you can access the statistics with a URL like:
+
+   http://your_server_name/server-status-text
+
+   They returns full text server status
+
