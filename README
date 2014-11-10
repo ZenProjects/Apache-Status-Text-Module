@@ -1,13 +1,14 @@
                                    mod_status_text
+                                   ===============
 
-What is it?
+# What is it?
 
    This is a full text fork of mod_status for only machine automatique parsing.
 
    This is Status Module.  They display lots of internal data about how Apache is
    performing and the state of all children processes.
 
-How to use it ?
+# How to use it ?
 
    Load mod_status_text and to enable it, add the following lines into any config file:
 
