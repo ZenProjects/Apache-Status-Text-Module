@@ -1,5 +1,5 @@
-                                   # mod_status_text
-                                   ===============
+# mod_status_text
+===============
 
 # What is it?
 
