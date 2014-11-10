@@ -1,5 +1,5 @@
-mod_status_text
-===============
+Apache Status Text Module
+=========================
 
 # What is it?
 
