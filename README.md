@@ -42,7 +42,7 @@ Apache Status Text Module
    http://your_server_name/server-status-text?<statistics_key>
 ```
 
-   They return the value of the <statistics_key>
+   They return the value of the <<statistics_key>>
    
    Also count number of requetes per seconds, 95% percentil and per type of response (5xx,4xx,3xx,2xx,1xx, etc...).
    
