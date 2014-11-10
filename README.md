@@ -8,6 +8,16 @@ mod_status_text
    This is Status Module.  They display lots of internal data about how Apache is
    performing and the state of all children processes.
 
+# How to build ? #
+
+```
+# unzip <module archive>.zip
+# cd <module directory>
+# ./configure --with-apxs=/path/to/apxs
+# make
+# make install
+```
+
 # How to use it ?
 
    Load mod_status_text and to enable it, add the following lines into any config file:
