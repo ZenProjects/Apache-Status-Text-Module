@@ -1,4 +1,4 @@
-# mod_status_text
+mod_status_text
 ===============
 
 # What is it?
@@ -12,15 +12,19 @@
 
    Load mod_status_text and to enable it, add the following lines into any config file:
 
+```
    LoadModule status_text_module modules/mod_status_text.so
    <Location /server-status-text>
    SetHandler server-status-text
    </Location>
+```
 
    You may want to protect this location by password or domain so no one
    else can look at it.  Then you can access the statistics with a URL like:
 
+```
    http://your_server_name/server-status-text
+```
 
    They returns full text server status
 
