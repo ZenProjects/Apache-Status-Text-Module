@@ -1,3 +1,5 @@
+[![Build Status](https://travis-ci.org/ZenProjects/Apache-Status-Text-Module.svg?branch=master)](https://travis-ci.org/ZenProjects/Apache-Status-Text-Module)
+
 Apache Status Text Module
 =========================
 
