@@ -1,4 +1,5 @@
 [![Build Status](https://travis-ci.org/ZenProjects/Apache-Status-Text-Module.svg?branch=master)](https://travis-ci.org/ZenProjects/Apache-Status-Text-Module)
+[![License](https://img.shields.io/badge/License-Apache%202.0-blue.svg)](https://opensource.org/licenses/Apache-2.0)
 
 Apache Status Text Module
 =========================
