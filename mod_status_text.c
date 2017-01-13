@@ -32,7 +32,6 @@
 #include "ap_mpm.h"
 #include "util_script.h"
 #include <time.h>
-#include "scoreboard.h"
 #include "http_log.h"
 #include "mod_status.h"
 #include "ap_listen.h"
@@ -45,6 +44,7 @@
 #include "apr_want.h"
 #include "apr_strings.h"
 #include "mod_status_text_config.h"
+#include "scoreboard.h"
 
 #ifdef NEXT
 #if (NX_CURRENT_COMPILER_RELEASE == 410)
@@ -348,14 +348,13 @@ static int status_text_handler(request_rec *r)
     float tick;
     int times_per_thread = getpid() != child_pid;
 #endif
-    int short_report;
-    int no_table_report;
-    worker_score *ws_record;
+    worker_score ws_record_st;
+    worker_score *ws_record=&ws_record_st;
     process_score *ps_record;
     char *stat_buffer;
     pid_t *pid_buffer, worker_pid;
     clock_t tu, ts, tcu, tcs;
-    ap_generation_t mpm_generation, worker_generation;
+    ap_generation_t worker_generation;
     apr_time_t *percentil_array;
     unsigned long nb_avg=0;
     unsigned long nb_percentil=0;
@@ -386,12 +385,13 @@ static int status_text_handler(request_rec *r)
     count = 0;
     bcount = 0;
     kbcount = 0;
-    short_report = 0;
-    no_table_report = 0;
     memset(&st_sb_total,0,sizeof(status_text_scoreboard_t));
     memset(percentil_array,0,server_limit * thread_limit * sizeof(apr_time_t));
 
-    ap_mpm_query(AP_MPMQ_GENERATION, &mpm_generation);
+#if AP_MODULE_MAGIC_AT_LEAST(20090401,1)
+    ap_generation_t ap_my_generation;
+    ap_mpm_query(AP_MPMQ_GENERATION, &ap_my_generation);
+#endif
 
     nowtime = apr_time_now();
     tu = ts = tcu = tcs = 0;
@@ -465,7 +465,7 @@ static int status_text_handler(request_rec *r)
 	    st_sb_total.nb_reqs_30s  +=st_sb_cur->nb_reqs_30s;
 	    st_sb_total.nb_reqs_xs   +=st_sb_cur->nb_reqs_xs;
 
-            ws_record = ap_get_scoreboard_worker_from_indexes(i, j);
+            ap_copy_scoreboard_worker(&ws_record_st,i, j);
             res = ws_record->status;
             stat_buffer[indx] = status_text_flags[res];
 
@@ -486,7 +486,7 @@ static int status_text_handler(request_rec *r)
             if (!ps_record->quiescing && ps_record->pid) 
 	    {
                 if (res == SERVER_READY
-                    && ps_record->generation == mpm_generation)
+                    && ps_record->generation == ap_my_generation)
                     ready++;
                 else if (res != SERVER_DEAD &&
                          res != SERVER_STARTING &&
@@ -705,7 +705,7 @@ static int status_text_handler(request_rec *r)
        }
        else if (strcasecmp(r->args,"ApacheParentServerGeneration")==0)
        {
-         ap_rprintf(r, "%d\n", (int)mpm_generation);
+         ap_rprintf(r, "%d\n", (int)ap_my_generation);
          return 0;
        }
        else if (strcasecmp(r->args,"ApacheCurrentTime")==0)
@@ -1028,7 +1028,7 @@ static int status_text_handler(request_rec *r)
     ap_rprintf(r, "ApacheServerArchitecture: %ld-bit\n",8 * (long) sizeof(void *));
     ap_rprintf(r, "ApacheTimeout: %d\n", (int) (apr_time_sec(r->server->timeout)));
     ap_rprintf(r, "ApacheKeepAliveTimeout: %d\n", (int) (apr_time_sec(r->server->keep_alive_timeout)));
-    ap_rprintf(r, "ApacheParentServerGeneration: %d\n", (int)mpm_generation);
+    ap_rprintf(r, "ApacheParentServerGeneration: %d\n", (int)ap_my_generation);
     ap_rprintf(r, "ApacheCurrentTime: %"APR_TIME_T_FMT"\n", nowtime);
     ap_rprintf(r, "ApacheRestartTime: %"APR_TIME_T_FMT"\n", ap_scoreboard_image->global->restart_time);
     ap_rprintf(r, "ApacheServerUptime: %ld\n", (long) (up_time));
@@ -1116,7 +1116,7 @@ static int status_text_handler(request_rec *r)
 	    /* get the current status text scoreboard */
 	    st_sb_cur=&st_sb[indx];
 
-	    ws_record = ap_get_scoreboard_worker_from_indexes(i, j);
+            ap_copy_scoreboard_worker(&ws_record_st,i, j);
 
 	    if (ws_record->access_count == 0 &&
 		(ws_record->status == SERVER_READY ||
