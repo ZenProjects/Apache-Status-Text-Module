@@ -468,7 +468,7 @@ static int status_text_handler(request_rec *r)
 	    #if __APACHE24__
               ap_copy_scoreboard_worker(&ws_record_st,i, j);
 	    #else
-	      ws_record = ap_get_scoreboard_worker_from_indexes(i, j);
+	      ws_record = ap_get_scoreboard_worker(i, j);
             #endif
             res = ws_record->status;
             stat_buffer[indx] = status_text_flags[res];
@@ -1123,7 +1123,7 @@ static int status_text_handler(request_rec *r)
 	    #if __APACHE24__
               ap_copy_scoreboard_worker(&ws_record_st,i, j);
 	    #else
-	      ws_record = ap_get_scoreboard_worker_from_indexes(i, j);
+	      ws_record = ap_get_scoreboard_worker(i, j);
             #endif
 
 	    if (ws_record->access_count == 0 &&
