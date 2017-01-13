@@ -465,10 +465,10 @@ static int status_text_handler(request_rec *r)
 	    st_sb_total.nb_reqs_30s  +=st_sb_cur->nb_reqs_30s;
 	    st_sb_total.nb_reqs_xs   +=st_sb_cur->nb_reqs_xs;
 
-	    #if __APACHE24__
+	    #if AP_MODULE_MAGIC_AT_LEAST(20051005,0)
               ap_copy_scoreboard_worker(&ws_record_st,i, j);
 	    #else
-	      ws_record = ap_get_scoreboard_worker_from_indexes(i, j);
+	      ws_record = ap_get_scoreboard_worker(i, j);
             #endif
             res = ws_record->status;
             stat_buffer[indx] = status_text_flags[res];
@@ -1120,10 +1120,10 @@ static int status_text_handler(request_rec *r)
 	    /* get the current status text scoreboard */
 	    st_sb_cur=&st_sb[indx];
 
-	    #if __APACHE24__
+	    #if AP_MODULE_MAGIC_AT_LEAST(20051005,0)
               ap_copy_scoreboard_worker(&ws_record_st,i, j);
 	    #else
-	      ws_record = ap_get_scoreboard_worker_from_indexes(i, j);
+	      ws_record = ap_get_scoreboard_worker(i, j);
             #endif
 
 	    if (ws_record->access_count == 0 &&
