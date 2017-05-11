@@ -4,9 +4,9 @@ machine:
 
 dependencies:
   pre:
-    - apt-get -qq update
-    - apt-get install gcc
-    - apt-get install apache2-dev
+    - sudo apt-get -qq update
+    - sudo apt-get install gcc
+    - sudo apt-get install apache2-dev
 
 compile:
   pre:
