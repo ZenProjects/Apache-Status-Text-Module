@@ -1,4 +1,4 @@
-[![TravisCI](https://travis-ci.org/ZenProjects/Apache-Status-Text-Module.svg?branch=master&style=shield)](https://travis-ci.org/ZenProjects/Apache-Status-Text-Module)
+[![TravisCI](https://travis-ci.org/ZenProjects/Apache-Status-Text-Module.svg?branch=master)](https://travis-ci.org/ZenProjects/Apache-Status-Text-Module)
 [![CircleCI](https://circleci.com/gh/ZenProjects/Apache-Status-Text-Module.svg?style=shield)](https://circleci.com/gh/ZenProjects/Apache-Status-Text-Module)
 [![License: GPL v3](https://img.shields.io/badge/License-GPL%20v3-blue.svg)](http://www.gnu.org/licenses/gpl-3.0)
 
